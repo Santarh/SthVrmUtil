@@ -1,5 +1,15 @@
 # Sth VRM Util
 
+## 導入方法
+
+Unity 上部メニューバーから `Window -> Package Manager` を選択し、 `+` ボタンを押して `Add package from git URL...` を選択します。
+
+そして入力欄に以下の URL を入力し、 `Add` ボタンを押します。
+
+```
+https://github.com/Santarh/SthVrmUtil.git?path=/Packages/net.santarh.sth-vrm-util#1.0.0
+```
+
 ## ExpressionWrapper
 
 VRM 0.X の `VRMBlendShapeProxy` コンポーネントと互換の API を使って VRM 1.0 モデルの Expression を。操作可能にします。
