@@ -1,106 +1,126 @@
 ﻿using System.Collections.Generic;
 using SthVrmUtil.Runtime.ExpressionWrapper;
+using SthVrmUtil.Runtime.ExpressionWrapper.Interface;
+using SthVrmUtil.Runtime.ExpressionWrapper.Internal;
 using UnityEngine;
+using UniVRM10;
 
 // NOTE: namespace は詐称する
 namespace VRM
 {
-    public class SthVRMBlendShapeProxy : MonoBehaviour, IVRMBlendShapeProxy
+    public class SthVRMBlendShapeProxy : MonoBehaviour, IVirtualVrmBlendShapeProxy
     {
-        public void Reinitialize()
+        [SerializeField] private Vrm10Instance _vrm10Instance;
+        private Vrm10RuntimeExpressionWrapper _wrapper;
+
+        private void Start()
         {
-            // NOTE: 再生成は VRM 1.0 モデルを色々弄る必要があってちょっとめんどい
-            throw new System.NotImplementedException();
+            if (_vrm10Instance == null)
+            {
+                _vrm10Instance = GetComponent<Vrm10Instance>();
+            }
+            _wrapper = new Vrm10RuntimeExpressionWrapper(() => _vrm10Instance.Runtime.Expression);
         }
 
-        public float GetValue(BlendShapeKey key)
+        private void Reset()
         {
-            throw new System.NotImplementedException();
+            _vrm10Instance = GetComponent<Vrm10Instance>();
         }
 
-        public float GetValue(BlendShapePreset key)
-        {
-            throw new System.NotImplementedException();
-        }
+        public IVirtualBlendShapeAvatar BlendShapeAvatar { get; } = new SthBlendShapeAvatar();
 
-        public float GetValue(string key)
-        {
-            throw new System.NotImplementedException();
-        }
+        public float GetValue(BlendShapeKey key) => _wrapper.GetWeight(key);
+
+        public float GetValue(BlendShapePreset key) => _wrapper.GetWeight(BlendShapeKey.CreateFromPreset(key));
+
+        public float GetValue(string key) => _wrapper.GetWeight(BlendShapeKey.CreateUnknown(key));
 
         public IEnumerable<KeyValuePair<BlendShapeKey, float>> GetValues()
         {
-            throw new System.NotImplementedException();
+            foreach (var x in _wrapper.GetWeights())
+            {
+                yield return new KeyValuePair<BlendShapeKey, float>(x.Key, x.Weight);
+            }
         }
 
-        public void AccumulateValue(BlendShapeKey key, float value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void AccumulateValue(BlendShapeKey key, float value) => _wrapper.AccumulateWeight(key, value);
 
-        public void AccumulateValue(BlendShapePreset key, float value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void AccumulateValue(BlendShapePreset key, float value) => _wrapper.AccumulateWeight(BlendShapeKey.CreateFromPreset(key), value);
 
-        public void AccumulateValue(string key, float value)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void AccumulateValue(string key, float value) => _wrapper.AccumulateWeight(BlendShapeKey.CreateUnknown(key), value);
 
-        public void Apply()
+        public void Apply() => _wrapper.Apply();
+
+        public void SetValue(BlendShapeKey key, float value, bool apply)
         {
-            throw new System.NotImplementedException();
+            _wrapper.AccumulateWeight(key, value);
+            if (apply)
+            {
+                _wrapper.Apply();
+            }
         }
 
         public void SetValue(BlendShapePreset key, float value, bool apply)
         {
-            throw new System.NotImplementedException();
+            _wrapper.AccumulateWeight(BlendShapeKey.CreateFromPreset(key), value);
+            if (apply)
+            {
+                _wrapper.Apply();
+            }
         }
 
         public void SetValue(string key, float value, bool apply)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetValue(BlendShapeKey key, float value, bool apply)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetValue(BlendShapePreset key, float value)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetValue(string key, float value)
-        {
-            throw new System.NotImplementedException();
+            _wrapper.AccumulateWeight(BlendShapeKey.CreateUnknown(key), value);
+            if (apply)
+            {
+                _wrapper.Apply();
+            }
         }
 
         public void SetValue(BlendShapeKey key, float value)
         {
-            throw new System.NotImplementedException();
+            _wrapper.AccumulateWeight(key, value);
+            _wrapper.Apply();
+        }
+
+        public void SetValue(BlendShapePreset key, float value)
+        {
+            _wrapper.AccumulateWeight(BlendShapeKey.CreateFromPreset(key), value);
+            _wrapper.Apply();
+        }
+
+        public void SetValue(string key, float value)
+        {
+            _wrapper.AccumulateWeight(BlendShapeKey.CreateUnknown(key), value);
+            _wrapper.Apply();
         }
 
         public void SetValues(IEnumerable<KeyValuePair<BlendShapeKey, float>> values)
         {
-            throw new System.NotImplementedException();
+            foreach (var x in values)
+            {
+                _wrapper.AccumulateWeight(x.Key, x.Value);
+            }
+            _wrapper.Apply();
         }
 
         public void ImmediatelySetValue(BlendShapeKey key, float value)
         {
-            throw new System.NotImplementedException();
+            _wrapper.AccumulateWeight(key, value);
+            _wrapper.Apply();
         }
 
         public void ImmediatelySetValue(BlendShapePreset key, float value)
         {
-            throw new System.NotImplementedException();
+            _wrapper.AccumulateWeight(BlendShapeKey.CreateFromPreset(key), value);
+            _wrapper.Apply();
         }
 
         public void ImmediatelySetValue(string key, float value)
         {
-            throw new System.NotImplementedException();
+            _wrapper.AccumulateWeight(BlendShapeKey.CreateUnknown(key), value);
+            _wrapper.Apply();
         }
     }
 }
