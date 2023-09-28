@@ -1,5 +1,10 @@
 # Sth VRM Util
 
+以下のバージョンにて動作確認を行っています。
+
+- Unity 2021.3
+- UniVRM v0.114.0
+
 ## 導入方法
 
 Unity 上部メニューバーから `Window -> Package Manager` を選択し、 `+` ボタンを押して `Add package from git URL...` を選択します。
@@ -12,7 +17,9 @@ https://github.com/Santarh/SthVrmUtil.git?path=/Packages/net.santarh.sth-vrm-uti
 
 ## ExpressionWrapper
 
-VRM 0.X の `VRMBlendShapeProxy` コンポーネントと互換の API を使って VRM 1.0 モデルの Expression を。操作可能にします。
+VRM 0.X の `VRMBlendShapeProxy` コンポーネント互換の API を用いて VRM 1.0 モデルの Expression を操作可能にします。
+
+VRM 0.X モデル向けの表情操作コードを流用するのに便利です。
 
 ```csharp
 private async void Start()
