@@ -1,0 +1,16 @@
+{
+  "name": "net.santarh.sth-vrm-util",
+  "version": "1.0.0",
+  "displayName": "Sth Vrm Util",
+  "description": "Utilities for VRM",
+  "unity": "2021.3",
+  "author": {
+    "name": "Santarh"
+  },
+  "dependencies": {
+    "com.vrmc.vrm": "0.114.0",
+    "com.vrmc.univrm": "0.114.0",
+    "com.vrmc.vrmshaders": "0.114.0",
+    "com.vrmc.gltf": "0.114.0"
+  }
+}
