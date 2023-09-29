@@ -39,6 +39,7 @@ namespace VRM
 
             if (_vrm0XBlendShapeProxy != null)
             {
+                _wrapper = new Vrm0XBlendShapeService(_vrm0XBlendShapeProxy);
             }
             else if (_vrm10Instance != null)
             {

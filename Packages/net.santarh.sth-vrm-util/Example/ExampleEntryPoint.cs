@@ -40,6 +40,7 @@ namespace SthVrmUtil.Example
                 try
                 {
                     vrm0XInstance = await VrmUtility.LoadAsync(filePath);
+                    vrm0XInstance.ShowMeshes();
                 }
                 catch (Exception e)
                 {
