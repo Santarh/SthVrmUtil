@@ -28,12 +28,12 @@ private async void Start()
     var vrm10Instance = await Vrm10.LoadPathAsync("path/to/vrm");
 
     // NOTE: VRM 0.X の VRMBlendShapeProxy の API をエミュレーションして表情操作可能なコンポーネントを追加します
-    var blendShapeProxy10 = vrm10Instance.gameObject.AddComponent<SthVRMBlendShapeProxy>();
+    var blendShapeProxy = vrm10Instance.gameObject.AddComponent<SthVRMBlendShapeProxy>().Initialize();
 
     // NOTE: VRM 0.X のプリセットを指定して VRM 1.0 モデルの表情を変更します
-    blendShapeProxy10.SetValue(BlendShapePreset.Joy, 1.0f, apply: true);
+    blendShapeProxy.ImmediatelySetValue(BlendShapePreset.Joy, 1.0f);
 
     // NOTE: 取得もできます
-    var value = blendShapeProxy10.GetValue(BlendShapePreset.Joy);
+    var value = blendShapeProxy.GetValue(BlendShapePreset.Joy);
 }
 ```
