@@ -180,10 +180,10 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "com.vrmc.vrm": "0.114.0",
-        "com.vrmc.univrm": "0.114.0",
-        "com.vrmc.vrmshaders": "0.114.0",
-        "com.vrmc.gltf": "0.114.0"
+        "com.vrmc.vrm": "",
+        "com.vrmc.univrm": "",
+        "com.vrmc.vrmshaders": "",
+        "com.vrmc.gltf": ""
       }
     },
     "com.unity.modules.ai": {

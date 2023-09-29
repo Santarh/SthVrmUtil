@@ -12,7 +12,7 @@ Unity 上部メニューバーから `Window -> Package Manager` を選択し、
 そして入力欄に以下の URL を入力し、 `Add` ボタンを押します。
 
 ```
-https://github.com/Santarh/SthVrmUtil.git?path=/Packages/net.santarh.sth-vrm-util#1.0.0
+https://github.com/Santarh/SthVrmUtil.git?path=/Packages/net.santarh.sth-vrm-util#2.0.0
 ```
 
 ## ExpressionWrapper
