@@ -9,24 +9,50 @@ namespace VRM
 {
     public class SthVRMBlendShapeProxy : MonoBehaviour, IVirtualVrmBlendShapeProxy
     {
+        [SerializeField] private VRMBlendShapeProxy _vrm0XBlendShapeProxy;
         [SerializeField] private Vrm10Instance _vrm10Instance;
-        private Vrm10RuntimeExpressionWrapper _wrapper;
+
+        private IBlendShapeService _wrapper;
+
+        /// <summary>
+        /// スクリプトから AddComponent したときに即座に利用可能にしたいときに呼ぶ
+        /// </summary>
+        /// <returns></returns>
+        public SthVRMBlendShapeProxy Initialize()
+        {
+            Start();
+            return this;
+        }
 
         private void Start()
         {
+            if (_wrapper != null) return;
+
+            if (_vrm0XBlendShapeProxy == null)
+            {
+                _vrm0XBlendShapeProxy = GetComponent<VRMBlendShapeProxy>();
+            }
             if (_vrm10Instance == null)
             {
                 _vrm10Instance = GetComponent<Vrm10Instance>();
             }
-            _wrapper = new Vrm10RuntimeExpressionWrapper(() => _vrm10Instance.Runtime.Expression);
+
+            if (_vrm0XBlendShapeProxy != null)
+            {
+            }
+            else if (_vrm10Instance != null)
+            {
+                _wrapper = new Vrm10BlendShapeService(_vrm10Instance);
+            }
         }
 
         private void Reset()
         {
+            _vrm0XBlendShapeProxy = GetComponent<VRMBlendShapeProxy>();
             _vrm10Instance = GetComponent<Vrm10Instance>();
         }
 
-        public IVirtualBlendShapeAvatar BlendShapeAvatar { get; } = new SthBlendShapeAvatar();
+        public IVirtualBlendShapeAvatar BlendShapeAvatar => _wrapper.BlendShapeAvatar;
 
         public float GetValue(BlendShapeKey key) => _wrapper.GetWeight(key);
 
